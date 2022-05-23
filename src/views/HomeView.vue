@@ -1,43 +1,15 @@
 <template>
    <v-app>
-      <!-- <nav-bar @sideBarDrawer="sideBarDrawer" />
-      <side-bar :group="group" :drawer="drawer" /> -->
+      <nav-bar />
+      <side-bar />
 
-      <v-app-bar class="purple darken-3 lighten-2" dark app>
-         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-         <v-toolbar-title>Title</v-toolbar-title>
-      </v-app-bar>
-      <v-navigation-drawer v-model="drawer" absolute temporary>
-         <v-list nav dense>
-            <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-               <v-list-item>
-                  <v-list-item-icon>
-                     <v-icon>mdi-home</v-icon>
-                  </v-list-item-icon>
-                  <router-link to="/">
-                     <v-list-item-title>Home</v-list-item-title>
-                  </router-link>
-               </v-list-item>
-
-               <v-list-item>
-                  <v-list-item-icon>
-                     <v-icon>mdi-account</v-icon>
-                  </v-list-item-icon>
-                  <router-link to="/employee">
-                     <v-list-item-title>Employee List</v-list-item-title>
-                  </router-link>
-               </v-list-item>
-            </v-list-item-group>
-         </v-list>
-      </v-navigation-drawer>
       <v-main>
          <v-container>
             <router-view
                :department-list="departmentList"
                :employee-list="employeeList"
-               @updateEmployee="updateEmployee"
-            ></router-view>
+               @reloadEmployeeList="reloadEmployeeList"
+            />
          </v-container>
       </v-main>
 
@@ -63,30 +35,19 @@
 
    /** */
    export default class HomeView extends Vue {
-      drawer = false;
-      group = null;
-
       employeeList: Array<Employee> = [];
-      departmentList: Array<Department> = [];
-      top10Employees: Array<Employee> = [];
-      employeesInHighestDept: Array<Employee> = [];
+      readonly departmentList: Array<Department> = [];
 
+      // (Hook) Get all data when vue is created
       created() {
          const data = new Data();
 
          data.loadDepartmentsList(this.departmentList);
 
          this.employeeList = data.getEmployeeList();
-
-         this.employeesInHighestDept = data.employeeInHighestDepartmentSalary(
-            this.departmentList,
-            this.employeeList
-         );
-
-         this.top10Employees = data.findTop10Employees(this.employeeList);
       }
 
-      updateEmployee(employeeList: Array<Employee>) {
+      reloadEmployeeList(employeeList: Array<Employee>) {
          this.employeeList = employeeList;
       }
    }

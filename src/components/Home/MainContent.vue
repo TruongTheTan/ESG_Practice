@@ -40,7 +40,7 @@
 
 <script lang="ts">
    import Employee from '@/Models/Employee';
-   import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+   import { Vue, Component, Prop } from 'vue-property-decorator';
    import Data from '@/assets/data/Data';
    import Department from '@/Models/Department';
    @Component
@@ -48,8 +48,8 @@
       employeeHighestDept: Array<Employee> = [];
       top10Employees: Array<Employee> = [];
 
-      @Prop(Array) employeeList: Array<Employee> = [];
-      @Prop(Array) departmentList: Array<Department> = [];
+      @Prop(Array) readonly employeeList: Array<Employee> = [];
+      @Prop(Array) readonly departmentList: Array<Department> = [];
 
       // use for responsive
       get width() {
@@ -80,27 +80,12 @@
          }
       }
 
-      mounted() {
+      // Find top 10 and employees in highest department
+      created() {
          const data = new Data();
 
          this.top10Employees = data.findTop10Employees(this.employeeList);
-
-         this.employeeHighestDept = data.employeeInHighestDepartmentSalary(
-            this.departmentList,
-            this.employeeList
-         );
-      }
-
-      @Watch('this.employeeList')
-      reloadData() {
-         const data = new Data();
-
-         this.top10Employees = data.findTop10Employees(this.employeeList);
-
-         this.employeeHighestDept = data.employeeInHighestDepartmentSalary(
-            this.departmentList,
-            this.employeeList
-         );
+         this.employeeHighestDept = data.employeeInHighestDepartmentSalary(this.departmentList, this.employeeList);
       }
    }
 </script>

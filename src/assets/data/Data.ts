@@ -23,31 +23,22 @@ export default class Data {
    ];
 
    updateEmployee(employeeUpdate: Employee): void {
-      this.employeeList.forEach((employee) => {
-         if (employee.getID() == employeeUpdate.getID()) {
-            employee.setName(employeeUpdate.getName());
-            employee.setAge(employeeUpdate.getAge());
-            employee.setSalary(employeeUpdate.getSalary());
-            employee.setDepartmentId(employeeUpdate.getDepartmentId());
-            return;
-         }
-      });
+      const employeeInList = this.employeeList.find((employee) => employee.getID() == employeeUpdate.getID())!;
 
-      console.log(this.employeeList);
+      employeeInList.setName(employeeUpdate.getName());
+      employeeInList.setAge(employeeUpdate.getAge());
+      employeeInList.setSalary(employeeUpdate.getSalary());
+      employeeInList.setDepartmentId(employeeUpdate.getDepartmentId());
    }
 
-   getEmployeeList() {
+   getEmployeeList(): Array<Employee> {
       return this.employeeList;
    }
+
    loadDepartmentsList(departmentList: Array<Department>): void {
       for (let i = 1; i <= 3; i++) {
-         departmentList.push(
-            new Department(
-               i,
-               'Department ' + i.toString(),
-               this.employeeList.filter((employee) => employee.getDepartmentId() == i)
-            )
-         );
+         const employeeList = this.employeeList.filter((employee) => employee.getDepartmentId() == i);
+         departmentList.push(new Department(i, 'Department ' + i.toString(), employeeList));
       }
    }
 
@@ -64,12 +55,12 @@ export default class Data {
          let totalSalary = 0;
 
          // get all employee in current department
-         const tempEmployeeList: Array<Employee> = employeeList.filter(
+         const employeeListInCurrentDepartment: Array<Employee> = employeeList.filter(
             (employee) => employee.getDepartmentId() === department.getID()
          );
 
          // calculate total salary of employees in current department
-         tempEmployeeList.forEach((employee) => {
+         employeeListInCurrentDepartment.forEach((employee) => {
             totalSalary += employee.getSalary();
          });
 
@@ -80,7 +71,7 @@ export default class Data {
          }
       });
 
-      //Get the highest department salary
+      // Return all the employees in the department
       return employeeList.filter((employee) => employee.getDepartmentId() === highestDepartmentID);
    }
 

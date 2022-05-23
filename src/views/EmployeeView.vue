@@ -1,14 +1,18 @@
 <template>
    <v-card>
       <v-card-title>
-         Employee List
+         <div>
+            <h3>Employee List</h3>
+            <h6>Click on table row to view employee details</h6>
+         </div>
 
          <v-spacer></v-spacer>
 
+         <!-- Search bar -->
          <v-autocomplete
             append-icon="mdi-magnify"
             label="Search by department"
-            :items="departmentListFound.length == 0 ? departmentList : departmentListFound"
+            :items="departmentList"
             item-text="name"
             item-value="ID"
             single-line
@@ -16,6 +20,8 @@
             :search-input.sync="search"
          ></v-autocomplete>
       </v-card-title>
+
+      <!-- Employee list -->
       <v-data-table
          class="row-pointer"
          :items-per-page="5"
@@ -29,10 +35,6 @@
 </template>
 
 <script lang="ts">
-   if (sessionStorage.getItem('username') == null) {
-      window.location.href = 'http://localhost:8080/login';
-   }
-
    import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
    import Employee from '@/Models/Employee';
    import Department from '../Models/Department';
@@ -41,7 +43,6 @@
       search = '';
 
       employeeListFound: Array<Employee> = [];
-      departmentListFound: Array<Department> = [];
 
       @Prop(Array) readonly employeeList: Array<Employee> = [];
       @Prop(Array) readonly departmentList: Array<Department> = [];
@@ -55,14 +56,9 @@
       ];
 
       @Watch('search')
-      searchByDept() {
+      searchByDeptName() {
          // If search box has values
-         if (this.search.trim() != '') {
-            // Department name found by search box
-            this.departmentListFound = this.departmentList.filter((department) =>
-               department.getName().includes(this.search)
-            );
-
+         if (this.search.trim() !== '') {
             // get last number of search box
             // Ex: Department 3 => departmentNumber = 3
             let departmentNumber: number = parseInt(this.search.split(' ')[1].trim());
@@ -72,11 +68,8 @@
                (employee) => employee.getDepartmentId() == departmentNumber
             );
 
-            // Set all listfound to 0 in order to display default lists
-         } else {
-            this.departmentListFound.length = 0;
-            this.employeeListFound.length = 0;
-         }
+            // Empty the list if search box empty
+         } else this.employeeListFound = [];
       }
 
       employeeDetails(employee: Employee) {
