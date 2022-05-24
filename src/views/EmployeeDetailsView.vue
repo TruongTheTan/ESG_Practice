@@ -65,6 +65,7 @@
    export default class EmployeeDetailsView extends Vue {
       openDialog = false;
 
+      /* eslint-disable */
       employeeID!: number;
       employeeName!: string;
       employeeAge!: number;
@@ -75,14 +76,14 @@
       ageRule = [(v: any) => !!v || 'Required', (v: any) => v > 20 || 'Age must greater than 20'];
       salaryRule = [(v: any) => !!v || 'Required', (v: any) => v > 0 || 'Salary must greater than 0'];
 
-      @Prop(Array) readonly employeeList: Array<Employee> = [];
-      @Prop(Array) readonly departmentList: Array<Department> = [];
+      @Prop(Array) readonly employeeList!: Array<Employee>;
+      @Prop(Array) readonly departmentList!: Array<Department>;
 
       //(Hook) Find an employee and binding data to text fields
       created() {
          const employee = this.employeeList.find(
             (employee) => employee.getID() === parseInt(this.$route.params.id)
-         )!;
+         ) as Employee;
 
          this.employeeID = employee.getID();
          this.employeeName = employee.getName();

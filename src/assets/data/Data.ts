@@ -23,7 +23,9 @@ export default class Data {
    ];
 
    updateEmployee(employeeUpdate: Employee): void {
-      const employeeInList = this.employeeList.find((employee) => employee.getID() == employeeUpdate.getID())!;
+      const employeeInList = this.employeeList.find(
+         (employee) => employee.getID() == employeeUpdate.getID()
+      ) as Employee;
 
       employeeInList.setName(employeeUpdate.getName());
       employeeInList.setAge(employeeUpdate.getAge());

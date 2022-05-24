@@ -25,8 +25,11 @@ const routes: Array<RouteConfig> = [
                if (sessionStorage.getItem('username')) next();
                // Redirect to login page
                else {
-                  alert('You not login yet');
-                  next('/login');
+                  const confirmLogin = confirm('You not login yet\nDo you want to login now ?');
+
+                  if (confirmLogin) next('/login');
+
+                  next(false);
                }
             },
             component: () => import('@/views/EmployeeDetailsView.vue'),

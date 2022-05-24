@@ -59,7 +59,7 @@
       pass = '';
       showPass = false;
 
-      rules = [(v: any) => !!v || 'Required'];
+      rules = [(v: object) => !!v || 'Required'];
 
       login(): void {
          if (this.name === 'admin' && this.pass === 'admin') {

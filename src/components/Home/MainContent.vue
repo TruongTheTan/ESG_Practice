@@ -84,7 +84,7 @@
          }
       }
 
-      // Find top 10 and employees in highest department
+      //(Hook) Find top 10, employees in highest department
       created() {
          const data = new Data();
 
