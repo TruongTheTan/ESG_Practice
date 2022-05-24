@@ -48,12 +48,14 @@
       employeeHighestDept: Array<Employee> = [];
       top10Employees: Array<Employee> = [];
 
-      @Prop(Array) readonly employeeList: Array<Employee> = [];
-      @Prop(Array) readonly departmentList: Array<Department> = [];
+      @Prop(Array) readonly employeeList!: Array<Employee>;
+      @Prop(Array) readonly departmentList!: Array<Department>;
 
       // use for responsive
       get width() {
          switch (this.$vuetify.breakpoint.name) {
+            case 'xs':
+               return '100%';
             case 'sm':
                return '43%';
             case 'md':
@@ -69,11 +71,13 @@
 
       get height() {
          switch (this.$vuetify.breakpoint.name) {
+            case 'xs':
             case 'sm':
             case 'md':
             case 'lg':
+               return '90%';
             case 'xl':
-               return '68%';
+               return '40%';
 
             default:
                return 0;

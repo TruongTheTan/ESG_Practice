@@ -44,8 +44,8 @@
 
       employeeListFound: Array<Employee> = [];
 
-      @Prop(Array) readonly employeeList: Array<Employee> = [];
-      @Prop(Array) readonly departmentList: Array<Department> = [];
+      @Prop(Array) readonly employeeList!: Array<Employee>;
+      @Prop(Array) readonly departmentList!: Array<Department>;
 
       headers = [
          { text: 'ID', value: 'ID', align: 'center' },

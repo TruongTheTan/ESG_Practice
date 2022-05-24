@@ -36,14 +36,13 @@
    /** */
    export default class HomeView extends Vue {
       employeeList: Array<Employee> = [];
+
       readonly departmentList: Array<Department> = [];
 
       // (Hook) Get all data when vue is created
       created() {
          const data = new Data();
-
          data.loadDepartmentsList(this.departmentList);
-
          this.employeeList = data.getEmployeeList();
       }
 

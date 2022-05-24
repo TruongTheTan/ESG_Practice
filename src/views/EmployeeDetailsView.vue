@@ -4,7 +4,7 @@
          <h1>Employee Details</h1>
          <v-form ref="form" lazy-validation>
             <!-- ID -->
-            <v-text-field disabled readonly label="ID" v-model="employeeID"></v-text-field>
+            <v-text-field disabled readonly label="ID" v-model.number="employeeID"></v-text-field>
 
             <!-- Name -->
             <v-text-field clearable :rules="rules" label="Name" required v-model="employeeName"></v-text-field>
@@ -16,7 +16,7 @@
                :rules="ageRule"
                label="Age"
                required
-               v-model="employeeAge"
+               v-model.number="employeeAge"
             ></v-text-field>
 
             <!-- salary -->
@@ -26,12 +26,12 @@
                :rules="salaryRule"
                label="Salary ($)"
                required
-               v-model="employeeSalary"
+               v-model.number="employeeSalary"
             ></v-text-field>
 
             <!-- Department -->
             <v-select
-               v-model="employeeDepartmentID"
+               v-model.number="employeeDepartmentID"
                :items="departmentList"
                item-text="name"
                item-value="ID"
@@ -39,7 +39,19 @@
                required
             ></v-select>
 
-            <v-btn @click="updateEmployee()" color="success" class="mr-4"> Update </v-btn>
+            <v-dialog v-model="openDialog" persistent max-width="300">
+               <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="success" dark v-bind="attrs" v-on="on"> Update </v-btn>
+               </template>
+               <v-card>
+                  <v-card-title class="text-h6"> Do you want to update this Employee ? </v-card-title>
+                  <v-card-actions>
+                     <v-spacer></v-spacer>
+                     <v-btn color="green darken-1" text @click="openDialog = false"> Disagree </v-btn>
+                     <v-btn color="green darken-1" text @click="updateEmployee()"> Agree </v-btn>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
          </v-form>
       </v-container>
    </v-main>
@@ -51,6 +63,8 @@
    import Data from '../assets/data/Data';
    @Component
    export default class EmployeeDetailsView extends Vue {
+      openDialog = false;
+
       employeeID!: number;
       employeeName!: string;
       employeeAge!: number;
@@ -98,6 +112,8 @@
                );
 
                alert('Employee updated successfully\nRedirecting to employee list page');
+
+               this.openDialog = false;
 
                this.$router.push('/employee');
 
