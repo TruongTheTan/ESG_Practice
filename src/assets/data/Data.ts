@@ -1,7 +1,9 @@
 import Department from '@/Models/Department';
 import Employee from '@/Models/Employee';
+import { action, computed, observable } from 'mobx';
 
 export default class Data {
+   @observable
    private employeeList: Array<Employee> = [
       new Employee(1, 'cuong', 22, 700, 3),
       new Employee(2, 'tan', 32, 399, 2),
@@ -22,6 +24,7 @@ export default class Data {
       new Employee(18, 'manager', 40, 250, 1),
    ];
 
+   @action.bound
    updateEmployee(employeeUpdate: Employee): void {
       const employeeInList = this.employeeList.find(
          (employee) => employee.getID() == employeeUpdate.getID()
@@ -33,7 +36,8 @@ export default class Data {
       employeeInList.setDepartmentId(employeeUpdate.getDepartmentId());
    }
 
-   getEmployeeList(): Array<Employee> {
+   @computed
+   get getEmployeeList(): Array<Employee> {
       return this.employeeList;
    }
 

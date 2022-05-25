@@ -43,7 +43,7 @@
       created() {
          const data = new Data();
          data.loadDepartmentsList(this.departmentList);
-         this.employeeList = data.getEmployeeList();
+         this.employeeList = data.getEmployeeList;
       }
 
       reloadEmployeeList(employeeList: Array<Employee>) {

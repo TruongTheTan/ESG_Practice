@@ -118,7 +118,7 @@
 
                this.$router.push('/employee');
 
-               return data.getEmployeeList(); // Return new list to parent Component
+               return data.getEmployeeList; // Return new list to parent Component
             } else alert('Age must greater than 20\nSalary must greater than 0');
          else alert('Must fill in all the required fields');
       }
