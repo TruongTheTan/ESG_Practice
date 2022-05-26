@@ -4,7 +4,7 @@ import { action, computed, observable } from 'mobx';
 
 class Data {
    @observable
-   private employeeList: Array<Employee> = [
+   private employeeList: Employee[] = [
       new Employee(1, 'cuong', 22, 700, 3),
       new Employee(2, 'tan', 32, 399, 2),
       new Employee(3, 'lan', 22, 711, 1),
