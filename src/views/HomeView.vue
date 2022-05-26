@@ -5,11 +5,7 @@
 
       <v-main>
          <v-container>
-            <router-view
-               :department-list="departmentList"
-               :employee-list="employeeList"
-               @reloadEmployeeList="reloadEmployeeList"
-            />
+            <router-view :department-list="departmentList" :employee-list="data.getEmployeeList" />
          </v-container>
       </v-main>
 
@@ -26,8 +22,7 @@
    import Footer from '../components/Home/Footer.vue';
 
    import Department from '../Models/Department';
-   import Employee from '../Models/Employee';
-   import Data from '../assets/data/Data';
+   import data from '../assets/data/Data';
 
    @Component({
       components: { NavBar, SideBar, MainContent, Footer },
@@ -35,19 +30,12 @@
 
    /** */
    export default class HomeView extends Vue {
-      employeeList: Array<Employee> = [];
-
+      data = data;
       readonly departmentList: Array<Department> = [];
 
       // (Hook) Get all data when vue is created
       created() {
-         const data = new Data();
          data.loadDepartmentsList(this.departmentList);
-         this.employeeList = data.getEmployeeList;
-      }
-
-      reloadEmployeeList(employeeList: Array<Employee>) {
-         this.employeeList = employeeList;
       }
    }
 </script>

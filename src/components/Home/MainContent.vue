@@ -41,7 +41,7 @@
 <script lang="ts">
    import Employee from '@/Models/Employee';
    import { Vue, Component, Prop } from 'vue-property-decorator';
-   import Data from '@/assets/data/Data';
+   import data from '@/assets/data/Data';
    import Department from '@/Models/Department';
    @Component
    export default class MainContent extends Vue {
@@ -86,8 +86,6 @@
 
       //(Hook) Find top 10, employees in highest department
       created() {
-         const data = new Data();
-
          this.top10Employees = data.findTop10Employees(this.employeeList);
          this.employeeHighestDept = data.employeeInHighestDepartmentSalary(this.departmentList, this.employeeList);
       }

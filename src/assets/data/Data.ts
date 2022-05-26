@@ -2,7 +2,7 @@ import Department from '@/Models/Department';
 import Employee from '@/Models/Employee';
 import { action, computed, observable } from 'mobx';
 
-export default class Data {
+class Data {
    @observable
    private employeeList: Array<Employee> = [
       new Employee(1, 'cuong', 22, 700, 3),
@@ -24,7 +24,7 @@ export default class Data {
       new Employee(18, 'manager', 40, 250, 1),
    ];
 
-   @action.bound
+   @action
    updateEmployee(employeeUpdate: Employee): void {
       const employeeInList = this.employeeList.find(
          (employee) => employee.getID() == employeeUpdate.getID()
@@ -85,3 +85,6 @@ export default class Data {
       return employeeList.sort((a, b) => b.getSalary() - a.getSalary()).slice(0, 10);
    }
 }
+
+const data = new Data();
+export default data;

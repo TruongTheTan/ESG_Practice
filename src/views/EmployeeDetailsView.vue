@@ -57,10 +57,10 @@
    </v-main>
 </template>
 <script lang="ts">
-   import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
+   import { Component, Vue, Prop } from 'vue-property-decorator';
    import Employee from '../Models/Employee';
    import Department from '../Models/Department';
-   import Data from '../assets/data/Data';
+   import data from '../assets/data/Data';
    @Component
    export default class EmployeeDetailsView extends Vue {
       openDialog = false;
@@ -93,13 +93,11 @@
       }
 
       // return new employee list to parent component after update (HomeView.vue)
-      @Emit('reloadEmployeeList')
       updateEmployee() {
          // Required fields must not empty
          if (this.employeeName && this.employeeAge && this.employeeSalary)
             if (this.employeeAge > 20 || this.employeeSalary > 0) {
                // Check valid age and salary
-               const data = new Data();
 
                // Update employee
                data.updateEmployee(
@@ -117,8 +115,6 @@
                this.openDialog = false;
 
                this.$router.push('/employee');
-
-               return data.getEmployeeList; // Return new list to parent Component
             } else alert('Age must greater than 20\nSalary must greater than 0');
          else alert('Must fill in all the required fields');
       }
