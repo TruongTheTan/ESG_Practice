@@ -42,10 +42,10 @@
    export default class extends Vue {
       search = '';
 
-      employeeListFound: Array<Employee> = [];
+      employeeListFound: Employee[] = [];
 
-      @Prop(Array) readonly employeeList!: Array<Employee>;
-      @Prop(Array) readonly departmentList!: Array<Department>;
+      @Prop(Array) readonly employeeList: Employee[] = [];
+      @Prop(Array) readonly departmentList: Employee[] = [];
 
       headers = [
          { text: 'ID', value: 'ID', align: 'center' },
@@ -65,7 +65,7 @@
 
             // Get all employee corresponding to departmentNumber
             this.employeeListFound = this.employeeList.filter(
-               (employee) => employee.getDepartmentId() == departmentNumber
+               (employee) => employee.departmentId == departmentNumber
             );
 
             // Empty the list if search box empty
@@ -73,7 +73,7 @@
       }
 
       employeeDetails(employee: Employee) {
-         this.$router.push('/employee/' + employee.getID());
+         this.$router.push('/employee/' + employee.ID);
       }
    }
 </script>

@@ -4,54 +4,49 @@ import { action, computed, observable } from 'mobx';
 
 class Data {
    @observable
-   private employeeList: Employee[] = [
-      new Employee(1, 'cuong', 22, 700, 3),
-      new Employee(2, 'tan', 32, 399, 2),
-      new Employee(3, 'lan', 22, 711, 1),
-      new Employee(4, 'alexander', 22, 50, 1),
-      new Employee(5, 'putin', 28, 75, 2),
-      new Employee(6, 'donald trump', 22, 700, 1),
-      new Employee(7, 'joe biden', 27, 462, 3),
-      new Employee(8, 'anwar', 12, 444, 2),
-      new Employee(9, 'haha123', 26, 231, 1),
-      new Employee(10, 'cuong', 32, 1000, 3),
-      new Employee(11, 'lan', 32, 333, 2),
-      new Employee(12, 'Uncle roger', 45, 1000, 2),
-      new Employee(13, 'hickey', 12, 200, 3),
-      new Employee(15, 'le van luyen', 38, 788, 1),
-      new Employee(16, 'Ho chi minh', 60, 2000, 3),
-      new Employee(17, 'the tan', 23, 500, 3),
-      new Employee(18, 'manager', 40, 250, 1),
+   private readonly employeeList: Employee[] = [
+      { ID: 1, name: 'cuong', age: 32, salary: 700, departmentId: 3 },
+      { ID: 2, name: 'tan', age: 34, salary: 399, departmentId: 1 },
+      { ID: 3, name: 'lan', age: 63, salary: 50, departmentId: 2 },
+      { ID: 4, name: 'alexander', age: 13, salary: 75, departmentId: 3 },
+      { ID: 5, name: 'putin', age: 44, salary: 700, departmentId: 1 },
+      { ID: 6, name: 'donald trump', age: 32, salary: 462, departmentId: 3 },
+      { ID: 7, name: 'joe biden', age: 33, salary: 444, departmentId: 2 },
+      { ID: 8, name: 'anwar', age: 45, salary: 444, departmentId: 2 },
+      { ID: 9, name: 'haha123', age: 45, salary: 231, departmentId: 3 },
+      { ID: 10, name: 'cuong', age: 63, salary: 1000, departmentId: 3 },
+      { ID: 11, name: 'lan', age: 12, salary: 333, departmentId: 3 },
+      { ID: 12, name: 'Uncle roger', age: 32, salary: 1000, departmentId: 1 },
+      { ID: 13, name: 'hickey', age: 45, salary: 200, departmentId: 1 },
+      { ID: 14, name: 'le van luyen', age: 32, salary: 788, departmentId: 1 },
+      { ID: 15, name: 'Ho chi minh', age: 65, salary: 2000, departmentId: 2 },
+      { ID: 16, name: 'the tan', age: 23, salary: 500, departmentId: 2 },
+      { ID: 17, name: 'manager', age: 32, salary: 250, departmentId: 2 },
    ];
 
    @action
    updateEmployee(employeeUpdate: Employee): void {
-      const employeeInList = this.employeeList.find(
-         (employee) => employee.getID() == employeeUpdate.getID()
-      ) as Employee;
+      const employeeInList = this.employeeList.find((employee) => employee.ID == employeeUpdate.ID) as Employee;
 
-      employeeInList.setName(employeeUpdate.getName());
-      employeeInList.setAge(employeeUpdate.getAge());
-      employeeInList.setSalary(employeeUpdate.getSalary());
-      employeeInList.setDepartmentId(employeeUpdate.getDepartmentId());
+      employeeInList.name = employeeUpdate.name;
+      employeeInList.age = employeeUpdate.age;
+      employeeInList.salary = employeeUpdate.salary;
+      employeeInList.departmentId = employeeUpdate.departmentId;
    }
 
    @computed
-   get getEmployeeList(): Array<Employee> {
+   get getEmployeeList(): Employee[] {
       return this.employeeList;
    }
 
-   loadDepartmentsList(departmentList: Array<Department>): void {
+   loadDepartmentsList(departmentList: Department[]): void {
       for (let i = 1; i <= 3; i++) {
-         const employeeList = this.employeeList.filter((employee) => employee.getDepartmentId() == i);
-         departmentList.push(new Department(i, 'Department ' + i.toString(), employeeList));
+         const employeeList = this.employeeList.filter((employee) => employee.departmentId == i);
+         departmentList.push({ ID: i, name: 'Department ' + i.toString(), employeeList });
       }
    }
 
-   employeeInHighestDepartmentSalary(
-      departmentList: Array<Department>,
-      employeeList: Array<Employee>
-   ): Array<Employee> {
+   employeeInHighestDepartmentSalary(departmentList: Department[], employeeList: Employee[]): Employee[] {
       let highestDepartmentID = 0;
 
       let highestSalary = 0;
@@ -61,28 +56,28 @@ class Data {
          let totalSalary = 0;
 
          // get all employee in current department
-         const employeeListInCurrentDepartment: Array<Employee> = employeeList.filter(
-            (employee) => employee.getDepartmentId() === department.getID()
+         const employeeListInCurrentDepartment: Employee[] = employeeList.filter(
+            (employee) => employee.departmentId === department.ID
          );
 
          // calculate total salary of employees in current department
          employeeListInCurrentDepartment.forEach((employee) => {
-            totalSalary += employee.getSalary();
+            totalSalary += employee.salary;
          });
 
          // Find the highest department salary
          if (totalSalary > highestSalary) {
             highestSalary = totalSalary;
-            highestDepartmentID = department.getID();
+            highestDepartmentID = department.ID;
          }
       });
 
       // Return all the employees in the department
-      return employeeList.filter((employee) => employee.getDepartmentId() === highestDepartmentID);
+      return employeeList.filter((employee) => employee.departmentId === highestDepartmentID);
    }
 
-   findTop10Employees(employeeList: Array<Employee>): Array<Employee> {
-      return employeeList.sort((a, b) => b.getSalary() - a.getSalary()).slice(0, 10);
+   findTop10Employees(employeeList: Employee[]): Employee[] {
+      return employeeList.sort((a, b) => b.salary - a.salary).slice(0, 10);
    }
 }
 

@@ -31,7 +31,7 @@
    /** */
    export default class HomeView extends Vue {
       data = data;
-      readonly departmentList: Array<Department> = [];
+      readonly departmentList: Department[] = [];
 
       // (Hook) Get all data when vue is created
       created() {

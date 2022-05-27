@@ -1,4 +1,16 @@
+export default interface Employee {
+   readonly ID: number;
+   name: string;
+   age: number;
+   salary: number;
+   departmentId: number;
+}
+
+/*
 export default class Employee {
+
+
+
    private ID: number;
    private name: string;
    private age: number;
@@ -51,4 +63,4 @@ export default class Employee {
    public setDepartmentId(departmentId: number): void {
       this.departmentId = departmentId;
    }
-}
+}*/

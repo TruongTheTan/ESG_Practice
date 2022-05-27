@@ -82,14 +82,14 @@
       //(Hook) Find an employee and binding data to text fields
       created() {
          const employee = this.employeeList.find(
-            (employee) => employee.getID() === parseInt(this.$route.params.id)
+            (employee) => employee.ID === parseInt(this.$route.params.id)
          ) as Employee;
 
-         this.employeeID = employee.getID();
-         this.employeeName = employee.getName();
-         this.employeeAge = employee.getAge();
-         this.employeeSalary = employee.getSalary();
-         this.employeeDepartmentID = employee.getDepartmentId();
+         this.employeeID = employee.ID;
+         this.employeeName = employee.name;
+         this.employeeAge = employee.age;
+         this.employeeSalary = employee.salary;
+         this.employeeDepartmentID = employee.departmentId;
       }
 
       // return new employee list to parent component after update (HomeView.vue)
@@ -97,18 +97,16 @@
          // Required fields must not empty
          if (this.employeeName && this.employeeAge && this.employeeSalary)
             if (this.employeeAge > 20 || this.employeeSalary > 0) {
-               // Check valid age and salary
+               const updateEmployee: Employee = {
+                  ID: this.employeeID,
+                  name: this.employeeName,
+                  age: this.employeeAge,
+                  salary: this.employeeSalary,
+                  departmentId: this.employeeDepartmentID,
+               };
 
                // Update employee
-               data.updateEmployee(
-                  new Employee(
-                     this.employeeID,
-                     this.employeeName,
-                     this.employeeAge,
-                     this.employeeSalary,
-                     this.employeeDepartmentID
-                  )
-               );
+               data.updateEmployee(updateEmployee);
 
                alert('Employee updated successfully\nRedirecting to employee list page');
 

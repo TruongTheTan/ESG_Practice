@@ -5,15 +5,15 @@
          <div class="d-flex flex-wrap" style="height: 30%; overflow-y: auto">
             <v-card
                v-for="employee in top10Employees"
-               :key="employee.getID()"
+               :key="employee.ID"
                class="rounded-md card mx-2 mb-3"
                :width="width"
                :height="height"
-               >ID: {{ employee.getID() }} <br />
-               Name: {{ employee.getName() }} <br />
-               Age: {{ employee.getAge() }} <br />
-               Salary: {{ employee.getSalary() }} $ <br />
-               Department: {{ employee.getDepartmentId() }} <br />
+               >ID: {{ employee.ID }} <br />
+               Name: {{ employee.name }} <br />
+               Age: {{ employee.age }} <br />
+               Salary: {{ employee.salary }} $ <br />
+               Department: {{ employee.departmentId }} <br />
             </v-card>
          </div>
 
@@ -23,15 +23,15 @@
          <div class="d-flex flex-wrap" style="height: 30%; overflow-y: auto">
             <v-card
                v-for="employee in employeeHighestDept"
-               :key="employee.getID()"
+               :key="employee.ID"
                class="rounded-md card mx-2 mb-3"
                :width="width"
                :height="height"
-               >ID: {{ employee.getID() }} <br />
-               Name: {{ employee.getName() }} <br />
-               Age: {{ employee.getAge() }} <br />
-               Salary: {{ employee.getSalary() }} $ <br />
-               Department: {{ employee.getDepartmentId() }} <br />
+               >ID: {{ employee.ID }} <br />
+               Name: {{ employee.name }} <br />
+               Age: {{ employee.age }} <br />
+               Salary: {{ employee.salary }} $ <br />
+               Department: {{ employee.departmentId }} <br />
             </v-card>
          </div>
       </main>
@@ -45,11 +45,11 @@
    import Department from '@/Models/Department';
    @Component
    export default class MainContent extends Vue {
-      employeeHighestDept: Array<Employee> = [];
-      top10Employees: Array<Employee> = [];
+      employeeHighestDept!: Employee[];
+      top10Employees!: Employee[];
 
-      @Prop(Array) readonly employeeList!: Array<Employee>;
-      @Prop(Array) readonly departmentList!: Array<Department>;
+      @Prop(Array) readonly employeeList!: Employee[];
+      @Prop(Array) readonly departmentList!: Department[];
 
       // use for responsive
       get width() {
