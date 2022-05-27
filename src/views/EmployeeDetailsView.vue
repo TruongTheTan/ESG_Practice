@@ -79,7 +79,7 @@
       @Prop(Array) readonly employeeList!: Array<Employee>;
       @Prop(Array) readonly departmentList!: Array<Department>;
 
-      //(Hook) Find an employee and binding data to text fields
+      //(Hook) Find an employee and binding datas to text fields
       created() {
          const employee = this.employeeList.find(
             (employee) => employee.ID === parseInt(this.$route.params.id)
@@ -92,7 +92,6 @@
          this.employeeDepartmentID = employee.departmentId;
       }
 
-      // return new employee list to parent component after update (HomeView.vue)
       updateEmployee() {
          // Required fields must not empty
          if (this.employeeName && this.employeeAge && this.employeeSalary)

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-   import { Vue, Component } from 'vue-property-decorator';
+   import { Vue, Component, Provide } from 'vue-property-decorator';
 
    import NavBar from '../components/Home/NavBar.vue';
    import SideBar from '../components/Home/SideBar.vue';
@@ -31,7 +31,7 @@
    /** */
    export default class HomeView extends Vue {
       data = data;
-      readonly departmentList: Department[] = [];
+      @Provide() readonly departmentList: Department[] = [];
 
       // (Hook) Get all data when vue is created
       created() {
