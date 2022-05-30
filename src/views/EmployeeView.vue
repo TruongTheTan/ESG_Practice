@@ -1,6 +1,6 @@
 <template>
    <v-card>
-      <Auto-Complete @deptNameFound="searchByDeptName" />
+      <Auto-Complete @department-found="searchByDeptName" />
 
       <!-- Employee list -->
       <v-data-table

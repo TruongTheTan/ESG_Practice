@@ -53,6 +53,15 @@
                </v-card>
             </v-dialog>
          </v-form>
+
+         <v-snackbar color="#4caf50" v-model="snackBar" :timeout="2000">
+            Employee updated successfully<br />
+            Redirecting to employee list page
+
+            <template v-slot:action="{ attrs }">
+               <v-btn color="white" text v-bind="attrs" @click="snackBar = false"> Close </v-btn>
+            </template>
+         </v-snackbar>
       </v-container>
    </v-main>
 </template>
@@ -63,6 +72,7 @@
    import data from '../assets/data/Data';
    @Component
    export default class EmployeeDetailsView extends Vue {
+      snackBar = false;
       openDialog = false;
 
       /* eslint-disable */
@@ -107,13 +117,17 @@
                // Update employee
                data.updateEmployee(updateEmployee);
 
-               alert('Employee updated successfully\nRedirecting to employee list page');
+               this.snackBar = true;
 
                this.openDialog = false;
 
-               this.$router.push('/employee');
+               setTimeout(this.toEmployeeListPage, 2500);
             } else alert('Age must greater than 20\nSalary must greater than 0');
          else alert('Must fill in all the required fields');
+      }
+
+      toEmployeeListPage() {
+         this.$router.push('/employee');
       }
    }
 </script>

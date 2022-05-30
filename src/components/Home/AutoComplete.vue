@@ -32,7 +32,7 @@
       @Inject() readonly departmentList!: Department[];
 
       @Watch('search')
-      @Emit('deptNameFound')
+      @Emit('department-found')
       searchByDeptName() {
          // If search box has values
          if (this.search.trim() !== '') {
