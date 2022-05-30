@@ -54,7 +54,7 @@
             </v-dialog>
          </v-form>
 
-         <v-snackbar color="#4caf50" v-model="snackBar" :timeout="2000">
+         <v-snackbar top color="#4caf50" v-model="snackBar" :timeout="2000">
             Employee updated successfully<br />
             Redirecting to employee list page
 
