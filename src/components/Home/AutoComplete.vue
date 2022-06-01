@@ -23,7 +23,8 @@
 
 <script lang="ts">
    import { Component, Vue, Inject, Watch, Emit } from 'vue-property-decorator';
-   import Department from '@/Models/Department';
+   //import Department from '@/Models/Department';
+   import { Department } from '@/viewmodels/Department';
 
    @Component
    export default class AutoComplete extends Vue {

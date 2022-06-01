@@ -1,11 +1,11 @@
-import Employee from './Employee';
-
+//import Employee from './Employee';
+/*
 export default interface Department {
    readonly ID: number;
    name: string;
    readonly employeeList: Employee[];
 }
-
+*/
 /*
 export default class Department {
    private ID: number;

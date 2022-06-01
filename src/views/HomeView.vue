@@ -5,7 +5,7 @@
 
       <v-main>
          <v-container>
-            <router-view :department-list="departmentList" :employee-list="data.getEmployeeList" />
+            <router-view :department-list="departmentList" :employee-list="employeeList" />
          </v-container>
       </v-main>
 
@@ -21,8 +21,14 @@
    import MainContent from '../components/Home/MainContent.vue';
    import Footer from '../components/Home/Footer.vue';
 
-   import Department from '../Models/Department';
-   import data from '../assets/data/Data';
+   //import Department from '../Models/Department';
+   //import data from '../assets/data/Data';
+
+   import { Department } from '@/viewmodels/Department';
+   import { Employee } from '@/viewmodels/Employee';
+
+   import departmentData from '@/viewmodels/Department';
+   import employeeData from '@/viewmodels/Employee';
 
    @Component({
       components: { NavBar, SideBar, MainContent, Footer },
@@ -30,12 +36,14 @@
 
    /** */
    export default class HomeView extends Vue {
-      data = data;
+      //data = data;
       @Provide() readonly departmentList: Department[] = [];
+      readonly employeeList: Employee[] = employeeData.getEmployeeList;
 
       // (Hook) Get all data when vue is created
       created() {
-         data.loadDepartmentsList(this.departmentList);
+         //data.loadDepartmentsList(this.departmentList);
+         departmentData.loadDepartmentsList(this.departmentList, employeeData.getEmployeeList);
       }
    }
 </script>

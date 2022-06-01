@@ -1,10 +1,10 @@
-export default interface Employee {
+/*export default interface Employee {
    readonly ID: number;
    name: string;
    age: number;
    salary: number;
    departmentId: number;
-}
+}*/
 
 /*
 export default class Employee {

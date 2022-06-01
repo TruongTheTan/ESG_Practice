@@ -67,9 +67,19 @@
 </template>
 <script lang="ts">
    import { Component, Vue, Prop } from 'vue-property-decorator';
+
+   /*
    import Employee from '../Models/Employee';
    import Department from '../Models/Department';
    import data from '../assets/data/Data';
+   */
+
+   import { Department } from '@/viewmodels/Department';
+   import { Employee } from '@/viewmodels/Employee';
+   import employeeData from '@/viewmodels/Employee';
+
+   //import departmentData from '@/viewmodels/Department';
+
    @Component
    export default class EmployeeDetailsView extends Vue {
       snackBar = false;
@@ -86,36 +96,36 @@
       ageRule = [(v: any) => !!v || 'Required', (v: any) => v > 20 || 'Age must greater than 20'];
       salaryRule = [(v: any) => !!v || 'Required', (v: any) => v > 0 || 'Salary must greater than 0'];
 
-      @Prop(Array) readonly employeeList!: Array<Employee>;
-      @Prop(Array) readonly departmentList!: Array<Department>;
+      //@Prop(Array) readonly employeeList!: Employee[];
+      @Prop(Array) readonly departmentList!: Department[];
 
       //(Hook) Find an employee and binding datas to text fields
       created() {
-         const employee = this.employeeList.find(
-            (employee) => employee.ID === parseInt(this.$route.params.id)
-         ) as Employee;
+         const employee: Employee = employeeData.findEmployeeByID(parseInt(this.$route.params.id));
 
-         this.employeeID = employee.ID;
-         this.employeeName = employee.name;
-         this.employeeAge = employee.age;
-         this.employeeSalary = employee.salary;
-         this.employeeDepartmentID = employee.departmentId;
+         this.employeeID = employee.getID();
+         this.employeeName = employee.getName();
+         this.employeeAge = employee.getAge();
+         this.employeeSalary = employee.getSalary();
+         this.employeeDepartmentID = employee.getDepartmentId();
       }
 
       updateEmployee() {
          // Required fields must not empty
          if (this.employeeName && this.employeeAge && this.employeeSalary)
             if (this.employeeAge > 20 || this.employeeSalary > 0) {
-               const updateEmployee: Employee = {
-                  ID: this.employeeID,
-                  name: this.employeeName,
-                  age: this.employeeAge,
-                  salary: this.employeeSalary,
-                  departmentId: this.employeeDepartmentID,
-               };
+               const updateEmployee: Employee = new Employee(
+                  this.employeeID,
+                  this.employeeName,
+                  this.employeeAge,
+                  this.employeeSalary,
+                  this.employeeDepartmentID
+               );
 
                // Update employee
-               data.updateEmployee(updateEmployee);
+               //data.updateEmployee(updateEmployee);
+
+               employeeData.updateEmployee(updateEmployee);
 
                this.snackBar = true;
 

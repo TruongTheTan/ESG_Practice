@@ -1,5 +1,5 @@
 <template>
-   <v-footer app color=" lighten-1" class="purple darken-3 lighten-2" padless>
+   <v-footer inset app color=" lighten-1" class="purple darken-3 lighten-2" padless>
       <v-row justify="center" no-gutters>
          <v-btn v-for="link in icons" :key="link" color="white" text rounded class="my-2">
             {{ link }}

@@ -17,8 +17,10 @@
 
 <script lang="ts">
    import { Component, Vue, Prop } from 'vue-property-decorator';
-   import Employee from '@/Models/Employee';
    import AutoComplete from '../components/Home/AutoComplete.vue';
+
+   import { Employee } from '@/viewmodels/Employee';
+   import employeeData from '@/viewmodels/Employee';
 
    @Component({
       components: { AutoComplete },
@@ -39,13 +41,11 @@
       ];
 
       employeeDetails(employee: Employee) {
-         this.$router.push('/employee/' + employee.ID);
+         this.$router.push('/employee/' + employee.getID());
       }
 
       searchByDeptName(departmentNumber: number) {
-         this.employeeListFound = this.employeeList.filter(
-            (employee) => employee.departmentId == departmentNumber
-         );
+         this.employeeListFound = employeeData.searchByDeptName(departmentNumber);
       }
    }
 </script>

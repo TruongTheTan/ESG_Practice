@@ -1,9 +1,9 @@
 <template>
    <v-sheet color="transparent">
-      <main style="height: 100vh">
+      <main style="height: auto">
          <h3>Top 10 employees with highest salary</h3>
          <div class="d-flex flex-wrap" style="height: 30%; overflow-y: auto">
-            <v-card
+            <!-- <v-card
                v-for="employee in top10Employees"
                :key="employee.ID"
                class="rounded-md card mx-2 mb-3"
@@ -14,6 +14,19 @@
                Age: {{ employee.age }} <br />
                Salary: {{ employee.salary }} $ <br />
                Department: {{ employee.departmentId }} <br />
+            </v-card> -->
+
+            <v-card
+               v-for="employee in top10Employees"
+               :key="employee.getID()"
+               class="rounded-md card mx-2 mb-3"
+               :width="width"
+               :height="height"
+               >ID: {{ employee.getID() }} <br />
+               Name: {{ employee.getName() }} <br />
+               Age: {{ employee.getAge() }} <br />
+               Salary: {{ employee.getSalary() }} $ <br />
+               Department: {{ employee.getDepartmentId() }} <br />
             </v-card>
          </div>
 
@@ -21,7 +34,7 @@
 
          <h3 class="mt-5">Employees in department with highest salary</h3>
          <div class="d-flex flex-wrap" style="height: 30%; overflow-y: auto">
-            <v-card
+            <!-- <v-card
                v-for="employee in employeeHighestDept"
                :key="employee.ID"
                class="rounded-md card mx-2 mb-3"
@@ -32,6 +45,19 @@
                Age: {{ employee.age }} <br />
                Salary: {{ employee.salary }} $ <br />
                Department: {{ employee.departmentId }} <br />
+            </v-card> -->
+
+            <v-card
+               v-for="employee in employeeHighestDept"
+               :key="employee.getID()"
+               class="rounded-md card mx-2 mb-3"
+               :width="width"
+               :height="height"
+               >ID: {{ employee.getID() }} <br />
+               Name: {{ employee.getName() }} <br />
+               Age: {{ employee.getAge() }} <br />
+               Salary: {{ employee.getSalary() }} $ <br />
+               Department: {{ employee.getDepartmentId() }} <br />
             </v-card>
          </div>
       </main>
@@ -39,17 +65,29 @@
 </template>
 
 <script lang="ts">
-   import Employee from '@/Models/Employee';
+   //import Employee from '@/Models/Employee';
    import { Vue, Component, Prop } from 'vue-property-decorator';
-   import data from '@/assets/data/Data';
-   import Department from '@/Models/Department';
+   //import data from '@/assets/data/Data';
+   //import Department from '@/Models/Department';
+
+   //import departmentData from '@/viewmodels/Department';
+   import { Department } from '@/viewmodels/Department';
+   import employeeData from '@/viewmodels/Employee';
+   import { Employee } from '@/viewmodels/Employee';
+
    @Component
    export default class MainContent extends Vue {
-      employeeHighestDept!: Employee[];
       top10Employees!: Employee[];
+      employeeHighestDept!: Employee[];
 
       @Prop(Array) readonly employeeList!: Employee[];
       @Prop(Array) readonly departmentList!: Department[];
+
+      //(Hook) Find top 10, employees in highest department
+      created() {
+         this.top10Employees = employeeData.findTop10Employees;
+         this.employeeHighestDept = employeeData.employeeInHighestDepartmentSalary(this.departmentList);
+      }
 
       // use for responsive
       get width() {
@@ -82,12 +120,6 @@
             default:
                return 0;
          }
-      }
-
-      //(Hook) Find top 10, employees in highest department
-      created() {
-         this.top10Employees = data.findTop10Employees(this.employeeList);
-         this.employeeHighestDept = data.employeeInHighestDepartmentSalary(this.departmentList, this.employeeList);
       }
    }
 </script>
