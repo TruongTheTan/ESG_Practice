@@ -1,24 +1,21 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import MainContent from '../components/Home/MainContent.vue';
+import Layout from '@/Layout.vue';
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
    {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'Layout',
+      component: Layout,
 
       children: [
-         { path: '/', name: 'mainContent', component: MainContent },
-
-         { path: '/employee', name: 'employee', component: () => import('@/views/EmployeeView.vue') },
-
+         { path: '/', name: 'HomeView', component: () => import('@/views/HomeView.vue') },
+         { path: '/employee', name: 'employeeListView', component: () => import('@/views/EmployeeListView.vue') },
          {
             path: '/employee/:id',
-            name: 'employeeDetails',
-
+            name: 'employeeDetailsView' /*
             // Authentication
             beforeEnter: (to, from, next) => {
                // Check is login
@@ -31,16 +28,12 @@ const routes: Array<RouteConfig> = [
 
                   next(false);
                }
-            },
+            },*/,
             component: () => import('@/views/EmployeeDetailsView.vue'),
          },
       ],
    },
-   {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
-   },
+   { path: '/login', name: 'loginView', component: () => import('../views/LoginView.vue') },
 ];
 
 const router = new VueRouter({
@@ -49,4 +42,21 @@ const router = new VueRouter({
    routes,
 });
 
+router.beforeEach((to, from, next) => {
+   if (to.path !== '/login') {
+      // Check is login
+      if (sessionStorage.getItem('username')) next();
+      // Redirect to login page
+      else {
+         const confirmLogin = confirm('You not login yet\nDo you want to login now ?');
+
+         if (confirmLogin) next('/login');
+
+         next(false);
+      }
+   } else {
+      next();
+   }
+   return false;
+});
 export default router;

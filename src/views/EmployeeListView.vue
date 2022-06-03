@@ -2,14 +2,13 @@
    <v-card>
       <Auto-Complete @department-found="searchByDeptName" />
 
-      <!-- Employee list -->
       <v-data-table
          class="row-pointer"
-         :items-per-page="5"
+         :items-per-page="10"
          :headers="headers"
          item-key="ID"
          :items="employeeListFound.length === 0 ? employeeList : employeeListFound"
-         @click:row="employeeDetails"
+         @click:row="employeeListViewModel.employeeDetails"
       >
       </v-data-table>
    </v-card>
@@ -17,20 +16,20 @@
 
 <script lang="ts">
    import { Component, Vue, Prop } from 'vue-property-decorator';
-   import AutoComplete from '../components/Home/AutoComplete.vue';
+   import AutoComplete from '@/components/Home/AutoComplete.vue';
 
-   import { Employee } from '@/viewmodels/Employee';
-   import employeeData from '@/viewmodels/Employee';
+   import { Employee } from '@/Models/Employee';
+   import EmployeeListViewModel from '@/viewmodels/EmployeeList.ViewModels';
 
-   @Component({
-      components: { AutoComplete },
-   })
+   @Component({ components: { AutoComplete } })
    export default class extends Vue {
       search = '';
 
       employeeListFound: Employee[] = [];
 
-      @Prop(Array) readonly employeeList!: Employee[];
+      @Prop() readonly employeeList!: Employee[];
+
+      employeeListViewModel = new EmployeeListViewModel();
 
       headers = [
          { text: 'ID', value: 'ID', align: 'center' },
@@ -40,12 +39,8 @@
          { text: 'Department number', value: 'departmentId', align: 'center' },
       ];
 
-      employeeDetails(employee: Employee) {
-         this.$router.push('/employee/' + employee.getID());
-      }
-
       searchByDeptName(departmentNumber: number) {
-         this.employeeListFound = employeeData.searchByDeptName(departmentNumber);
+         this.employeeListFound = this.employeeListViewModel.searchByDeptName(departmentNumber);
       }
    }
 </script>

@@ -1,8 +1,12 @@
 <template>
-   <v-app-bar class="purple darken-3 lighten-2" dark app>
-      <v-app-bar-nav-icon @click="drawSideBar"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Title</v-toolbar-title>
+   <v-app-bar app color="#1d2939" class="white--text">
+      <div>
+         <v-app-bar-nav-icon
+            class="white--text"
+            @click="$root.$emit('draw', (drawer = !drawer))"
+         ></v-app-bar-nav-icon>
+      </div>
+      <v-toolbar-title>Vue Admin Template</v-toolbar-title>
    </v-app-bar>
 </template>
 
@@ -11,9 +15,7 @@
 
    @Component
    export default class NavBar extends Vue {
-      drawSideBar() {
-         this.$root.$emit('drawSideBar', true);
-      }
+      drawer = true;
    }
 </script>
 

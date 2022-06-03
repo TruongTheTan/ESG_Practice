@@ -38,7 +38,7 @@
 
                            <v-card-actions>
                               <v-spacer></v-spacer>
-                              <v-btn @click="login()" color="primary">Login</v-btn>
+                              <v-btn @click="loginViewModel.login(name, pass)" color="primary">Login</v-btn>
                            </v-card-actions>
                         </v-form>
                      </v-card-text>
@@ -53,20 +53,17 @@
 <script lang="ts">
    import { Vue, Component } from 'vue-property-decorator';
 
+   import LoginViewModel from '@/viewmodels/Login.ViewModels';
+
    @Component
    export default class LoginView extends Vue {
       name = '';
       pass = '';
       showPass = false;
 
-      rules = [(v: object) => !!v || 'Required'];
+      loginViewModel = new LoginViewModel();
 
-      login(): void {
-         if (this.name === 'admin' && this.pass === 'admin') {
-            sessionStorage.setItem('username', this.name);
-            this.$router.push('/');
-         } else alert('Wrong account');
-      }
+      rules = [(v: object) => !!v || 'Required'];
    }
 </script>
 
